@@ -1,0 +1,73 @@
+﻿@model IEnumerable<BOL.Pizza>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Pizzas</h2>
+
+@if((String)@ViewData["isAdmin"] == "ADMIN") {
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+}
+
+
+<h1>Hello, @ViewData["username"]</h1>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Type)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Price)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Type)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Price)
+        </td>
+        <td>
+            @if ((String)@ViewData["isAdmin"] == "ADMIN") {
+                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) <br />
+            }
+
+
+            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ })
+
+            @if ((String)@ViewData["isAdmin"] == "ADMIN") {<br />
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            }
+
+            @if ((String)@ViewData["isAdmin"] == "CUSTOMER") {<br />
+               
+                @Html.ActionLink("AddToCart", "AddToCart", "User", new {
+                    Name = item.Name,
+                    Description = item.Description,
+                    Type = item.Type,
+                    Price = item.Price
+                }, null);;
+            }
+        </td>
+    </tr>
+}
+
+</table>
